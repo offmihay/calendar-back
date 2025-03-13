@@ -20,24 +20,24 @@ enum Importance {
 }
 
 model User {
-  id           String @id @default(uuid(7)) @db.Uuid
-  email        String @unique
-  passwordHash String @map("password_hash")
-  tasks        Task[]
+  id           String  @id @default(uuid(7)) @db.Uuid
+  email        String  @unique
+  passwordHash String  @map("password_hash")
+  events       Event[]
 
   @@map("users")
 }
 
-model Task {
+model Event {
   id          String     @id @default(uuid(7)) @db.Uuid
   name        String
   date        DateTime
   description String
   importance  Importance
   user        User       @relation(fields: [userId], references: [id])
-  userId      String     @db.Uuid @map("user_id")
+  userId      String     @map("user_id") @db.Uuid
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
-  @@map("tasks")
+  @@map("events")
 }
